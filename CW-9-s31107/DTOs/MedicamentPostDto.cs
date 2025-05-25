@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CW_9_s31107.DTOs;
 
-public class PrescriptionMedicamentPostDto
+public class MedicamentPostDto
 {
     public required int IdMedicament { get; set; }
     public int? Dose { get; set; }
