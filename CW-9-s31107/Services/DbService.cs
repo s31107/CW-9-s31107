@@ -14,12 +14,14 @@ public interface IDbService
 
 public class DbService(AppDbContext data) : IDbService
 {
-    private async Task<Patient> CreatePatientIfNotExists(int idPatient, string firstName, string lastName)
+    private async Task<Patient> CreatePatientIfNotExists(int idPatient, string firstName, string lastName, 
+        DateOnly birthDate)
     {
         var patient = await data.Patients.FirstOrDefaultAsync(p => p.IdPatient == idPatient);
         if (patient is not null) return patient;
         patient = new Patient
         {
+            BirthDate = birthDate,
             FirstName = firstName,
             LastName = lastName
         };
@@ -63,7 +65,7 @@ public class DbService(AppDbContext data) : IDbService
         {
             // Adding patient:
             var patient = await CreatePatientIfNotExists(prescriptionDto.Patient.IdPatient,
-                prescriptionDto.Patient.FirstName, prescriptionDto.Patient.LastName);
+                prescriptionDto.Patient.FirstName, prescriptionDto.Patient.LastName, prescriptionDto.Patient.Birthdate);
             // Getting doctor:
             var doctor = await GetDoctor(prescriptionDto.Patient.IdDoctor);
             // Creating prescription:
